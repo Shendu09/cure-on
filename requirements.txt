@@ -1,6 +1,7 @@
 # Core RAG dependencies
 langchain==0.3.7
 langchain-community==0.3.6
+langchain-huggingface==0.1.2
 faiss-cpu==1.8.0
 
 # Hugging Face for FREE cloud deployment

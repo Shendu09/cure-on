@@ -4,7 +4,7 @@ services:
     name: medical-rag-chatbot
     runtime: python
     plan: free  # 100% FREE
-    buildCommand: pip install -r requirements.txt && python src/ingest.py
+    buildCommand: pip install --no-cache-dir -r requirements.txt && python src/ingest.py
     startCommand: python src/app_gradio.py
     envVars:
       - key: PYTHON_VERSION
@@ -23,6 +23,10 @@ services:
         value: 0.0.0.0
       - key: GRADIO_SERVER_PORT
         value: 10000
+      - key: TRANSFORMERS_CACHE
+        value: /opt/render/project/.cache
+      - key: HF_HOME
+        value: /opt/render/project/.cache
     # Render provides disk storage
     disk:
       name: vector-store

@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.schema import Document
 
 # PDF processing
@@ -25,10 +25,11 @@ class DocumentIngester:
     """Handles document loading, chunking, and indexing."""
     
     def __init__(self):
+        print("Loading embeddings model (this may take a moment)...")
         self.embeddings = HuggingFaceEmbeddings(
             model_name=settings.embedding_model,
             model_kwargs={'device': 'cpu'},
-            encode_kwargs={'normalize_embeddings': True}
+            encode_kwargs={'normalize_embeddings': True, 'batch_size': 8, 'show_progress_bar': False}
         )
         
         self.text_splitter = RecursiveCharacterTextSplitter(

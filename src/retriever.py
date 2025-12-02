@@ -3,7 +3,7 @@
 from pathlib import Path
 from typing import List, Dict, Any
 
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.schema import Document
 
@@ -21,7 +21,7 @@ class Retriever:
         self.embeddings = HuggingFaceEmbeddings(
             model_name=settings.embedding_model,
             model_kwargs={'device': 'cpu'},
-            encode_kwargs={'normalize_embeddings': True}
+            encode_kwargs={'normalize_embeddings': True, 'batch_size': 8}
         )
         
         # Load vector store
