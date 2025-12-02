@@ -1,0 +1,30 @@
+services:
+  # Web service for the Gradio UI (FREE TIER with Hugging Face)
+  - type: web
+    name: medical-rag-chatbot
+    runtime: python
+    plan: free  # 100% FREE
+    buildCommand: pip install -r requirements.txt && python src/ingest.py
+    startCommand: python src/app_gradio.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: USE_HUGGINGFACE
+        value: true
+      - key: HF_MODEL
+        value: mistralai/Mistral-7B-Instruct-v0.2
+      - key: HUGGINGFACE_API_KEY
+        sync: false  # Set this in Render dashboard
+      - key: EMBEDDING_MODEL
+        value: sentence-transformers/all-MiniLM-L6-v2
+      - key: USE_LOCAL_MODELS
+        value: false
+      - key: GRADIO_SERVER_NAME
+        value: 0.0.0.0
+      - key: GRADIO_SERVER_PORT
+        value: 10000
+    # Render provides disk storage
+    disk:
+      name: vector-store
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
