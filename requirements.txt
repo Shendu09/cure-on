@@ -4,7 +4,7 @@ langchain-community==0.3.6
 faiss-cpu==1.8.0
 
 # Hugging Face for FREE cloud deployment
-huggingface-hub==0.20.3
+huggingface-hub>=0.20.0
 
 # Ollama for local LLMs (Llama 3, Mistral, etc.)
 ollama==0.4.5
