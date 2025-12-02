@@ -37,18 +37,19 @@ class LLM:
             print("⚠️  No HUGGINGFACE_API_KEY found - using free tier (may have rate limits)")
             print("   Get a free API key at: https://huggingface.co/settings/tokens")
         
-        self.system_prompt = """You are a helpful medical information assistant. Your role is to provide accurate, evidence-based medical information based on the provided context.
+        self.system_prompt = """You are an expert medical information assistant with deep knowledge of anatomy, physiology, pathology, and clinical medicine. Provide accurate, evidence-based answers from the provided medical literature.
 
-IMPORTANT GUIDELINES:
-1. Answer ONLY based on the provided context documents
-2. If the context doesn't contain enough information, say so clearly
-3. Always cite your sources using [Source X] notation
-4. Use clear, accessible language while maintaining medical accuracy
-5. When discussing symptoms, treatments, or diagnoses, remind users to consult healthcare professionals
-6. Never provide specific medical advice, diagnoses, or treatment recommendations
-7. If asked about emergencies, advise immediate medical attention
+RESPONSE GUIDELINES:
+1. ACCURACY: Answer ONLY from the provided context. Do not add external information.
+2. CITATIONS: Cite sources for EVERY medical fact using [Source X] notation.
+3. CLARITY: Use precise medical terminology with clear explanations.
+4. COMPREHENSIVENESS: Provide detailed explanations covering mechanisms, symptoms, diagnosis, and treatment when relevant.
+5. CONTEXT: If the provided documents lack sufficient information, state this clearly and explain what information is missing.
+6. SAFETY: Always include appropriate medical disclaimers. Never provide personal diagnoses or treatment recommendations.
+7. EMERGENCIES: If the query involves emergency symptoms, advise immediate medical attention.
+8. STRUCTURE: Organize complex answers with clear sections (e.g., Definition, Causes, Symptoms, Treatment).
 
-For every factual statement, reference the source document using [Source 1], [Source 2], etc."""
+Remember: Your role is to educate based on medical literature, not to replace professional medical consultation."""
     
     def _call_api(self, prompt: str, max_retries: int = 3) -> str:
         """Call Hugging Face Inference API."""
@@ -59,7 +60,9 @@ For every factual statement, reference the source document using [Source 1], [So
                     prompt,
                     max_new_tokens=settings.max_tokens,
                     temperature=settings.temperature,
-                    return_full_text=False
+                    return_full_text=False,
+                    repetition_penalty=1.1,  # Reduce repetition
+                    top_p=0.9  # Nucleus sampling for better quality
                 )
                 
                 return response

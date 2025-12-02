@@ -30,23 +30,23 @@ class Settings(BaseSettings):
     huggingface_api_key: str = os.getenv("HUGGINGFACE_API_KEY", "")
     hf_model: str = os.getenv("HF_MODEL", "mistralai/Mistral-7B-Instruct-v0.2")
     
-    # Embeddings (using sentence-transformers - FREE)
-    embedding_model: str = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
+    # Embeddings - Using multi-qa model optimized for medical Q&A
+    embedding_model: str = os.getenv("EMBEDDING_MODEL", "sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
     
     # Legacy local models (for Ollama if needed)
     use_local_models: bool = os.getenv("USE_LOCAL_MODELS", "false").lower() == "true"
     llm_model: str = os.getenv("LLM_MODEL", "llama3")
     
-    # LLM settings
-    temperature: float = 0.1
-    max_tokens: int = 500
+    # LLM settings - Optimized for accuracy
+    temperature: float = 0.2  # Slightly higher for more natural responses
+    max_tokens: int = 800  # More tokens for detailed medical explanations
     
-    # Chunking
-    chunk_size: int = 1000
-    chunk_overlap: int = 200
+    # Chunking - Optimized for medical content
+    chunk_size: int = 1500  # Larger chunks for better medical context
+    chunk_overlap: int = 300  # More overlap to preserve medical relationships
     
-    # Retrieval
-    top_k: int = 5
+    # Retrieval - More sources for comprehensive answers
+    top_k: int = 7  # Retrieve more relevant documents
     
     # Server
     api_host: str = "0.0.0.0"

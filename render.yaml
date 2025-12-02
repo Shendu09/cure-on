@@ -16,7 +16,7 @@ services:
       - key: HUGGINGFACE_API_KEY
         sync: false  # Set this in Render dashboard
       - key: EMBEDDING_MODEL
-        value: sentence-transformers/all-MiniLM-L6-v2
+        value: sentence-transformers/multi-qa-MiniLM-L6-cos-v1
       - key: USE_LOCAL_MODELS
         value: false
       - key: GRADIO_SERVER_NAME

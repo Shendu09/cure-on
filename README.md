@@ -1,4 +1,136 @@
-# Medical RAG Chatbot
+# 🏥 Medical RAG Chatbot
+
+AI-powered medical Q&A system using **Retrieval-Augmented Generation (RAG)** with comprehensive medical knowledge base covering Cardiology, Emergency Medicine, Nephrology, Gastrology, and more.
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+## ✨ Features
+
+- 🎯 **High Accuracy**: Optimized embedding model and chunking strategy for medical content
+- 📚 **Citation-Backed**: Every answer includes source references from medical literature
+- 🚨 **Safety First**: Emergency detection and medical disclaimers built-in
+- 🆓 **100% Free**: Runs on Render free tier with Hugging Face API
+- 📖 **Comprehensive**: 1.6GB medical knowledge base (9 specialty PDFs)
+
+## 🚀 Quick Deploy (5 minutes)
+
+### 1. Get Hugging Face API Key (FREE)
+```
+https://huggingface.co/settings/tokens
+→ New token → Read access → Copy
+```
+
+### 2. Deploy to Render
+1. Click "Deploy to Render" button above
+2. Connect your GitHub repository
+3. Add environment variable:
+   - Key: `HUGGINGFACE_API_KEY`
+   - Value: Your HF token
+4. Click "Create Web Service"
+
+**Deployment takes 15-20 minutes** (includes PDF indexing)
+
+## 📊 Architecture
+
+```
+User Query
+    ↓
+Multi-QA Embeddings (Optimized for Medical Q&A)
+    ↓
+FAISS Vector Search (Top-7 Results)
+    ↓
+Mistral-7B-Instruct + Medical Context
+    ↓
+Answer with Citations + Disclaimer
+```
+
+## ⚙️ Optimizations
+
+### Model Configuration
+- **Embeddings**: `multi-qa-MiniLM-L6-cos-v1` (optimized for Q&A)
+- **LLM**: Mistral-7B-Instruct-v0.2 (medical-grade responses)
+- **Chunking**: 1500 chars with 300 overlap (better context)
+- **Retrieval**: Top-7 documents (comprehensive answers)
+- **Temperature**: 0.2 (balanced accuracy/naturalness)
+
+### Memory Optimizations
+- Batch processing (batch_size=8)
+- No pip cache during build
+- Optimized for Render's 512MB free tier
+
+## 📁 Dataset
+
+**9 Medical Specialties** (1.6GB total):
+- Anatomy & Physiology (90MB)
+- Cardiology (179MB)
+- Dentistry (181MB)
+- Emergency Medicine (262MB)
+- Gastrology (289MB)
+- General Medicine (59MB)
+- Infectious Diseases (6MB)
+- Internal Medicine (239MB)
+- Nephrology (312MB)
+
+## 🧪 Example Questions
+
+- "What are the pathophysiological mechanisms of acute myocardial infarction?"
+- "Explain the treatment protocol for diabetic nephropathy"
+- "What are the emergency interventions for anaphylactic shock?"
+- "Describe the anatomical structure of the cardiovascular system"
+
+## 🛠️ Local Development
+
+```bash
+# Clone repository
+git clone https://github.com/Shendu09/cure-on.git
+cd cure-on
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set environment variables
+export USE_HUGGINGFACE=true
+export HUGGINGFACE_API_KEY=your_token_here
+
+# Index documents (first time only)
+python src/ingest.py
+
+# Run chatbot
+python src/app_gradio.py
+```
+
+Visit: http://localhost:7860
+
+## 📝 API Documentation
+
+Once deployed, visit `/docs` for interactive API documentation.
+
+**Endpoints:**
+- `POST /chat` - Submit medical question
+- `GET /health` - System health check
+- `GET /stats` - Usage statistics
+
+## 🔒 Safety & Disclaimers
+
+- ✅ Automatic emergency detection
+- ✅ Personal medical advice warnings
+- ✅ Source citation requirements
+- ✅ Professional consultation reminders
+- ✅ Medical disclaimers on all responses
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE)
+
+## 🙏 Acknowledgments
+
+Built for **HackACure** - Medical AI Innovation Challenge
+
+---
+
+**Live Demo**: [Your Render URL]  
+**Repository**: https://github.com/Shendu09/cure-on  
+**Issues**: https://github.com/Shendu09/cure-on/issues
 
 A Retrieval-Augmented Generation (RAG) system for medical Q&A that provides accurate, explainable, and citation-backed answers.
 

@@ -8,15 +8,8 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent))
 
 from retriever import Retriever
+from llm_huggingface import LLM  # Optimized Hugging Face API
 from config import settings
-
-# Import appropriate LLM based on configuration
-if settings.use_huggingface:
-    from llm_huggingface import LLM  # Hugging Face API (free, cloud-ready)
-elif settings.use_local_models:
-    from llm_ollama import LLM  # Using Ollama for local LLMs
-else:
-    from llm import LLM  # Fallback to OpenAI
 
 
 class RAGSystem:
